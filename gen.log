@@ -1,0 +1,41 @@
+[main] INFO  o.o.codegen.DefaultGenerator - Generating with dryRun=false
+[main] WARN  o.o.c.ignore.CodegenIgnoreProcessor - Output directory does not exist, or is inaccessible. No file (.openapi-generator-ignore) will be evaluated.
+[main] INFO  o.o.codegen.DefaultGenerator - OpenAPI Generator: rust-server (server)
+[main] INFO  o.o.codegen.DefaultGenerator - Generator 'rust-server' is considered stable.
+[main] INFO  o.o.c.languages.RustServerCodegen - Environment variable RUST_POST_PROCESS_FILE not defined. rustfmt will be used by default. To choose a different tool, try 'export RUST_POST_PROCESS_FILE="/usr/local/bin/rustfmt"' (Linux/Mac)
+[main] INFO  o.o.c.languages.RustServerCodegen - NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true`  (--enable-post-process-file for CLI).
+[main] WARN  o.o.c.languages.RustServerCodegen - generateAliasAsModel is set to false, which means array/map will be generated as model instead and the resulting code may have issues. Please enable `generateAliasAsModel` to address the issue.
+[main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+[main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+[main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+[main] WARN  o.o.codegen.DefaultCodegen - Empty operationId found for path: get /{Server}/challenger. Renamed to auto-generated operationId: serverChallengerGet
+[main] WARN  o.o.codegen.DefaultCodegen - Empty operationId found for path: get /{Server}/grandmaster. Renamed to auto-generated operationId: serverGrandmasterGet
+[main] WARN  o.o.codegen.DefaultCodegen - Empty operationId found for path: get /{Server}/matchList. Renamed to auto-generated operationId: serverMatchListGet
+[main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/docs/default_api.md
+[main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/api/openapi.yaml
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/Cargo.toml
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/.cargo/config
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/.gitignore
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/src/lib.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/src/context.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/src/models.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/src/header.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/src/server/mod.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/src/client/mod.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/examples/server/main.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/examples/server/server.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/examples/client/main.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/examples/ca.pem
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/examples/server-chain.pem
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/examples/server-key.pem
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/README.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/.openapi-generator-ignore
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/.openapi-generator/VERSION
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api/.openapi-generator/FILES
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
