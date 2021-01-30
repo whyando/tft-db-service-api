@@ -1,5 +1,5 @@
 [package]
-name = "openapi_client"
+name = "tft_db_service"
 version = "1.0.0"
 authors = []
 description = "Teamfight tactics database service"

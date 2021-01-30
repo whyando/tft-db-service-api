@@ -1,4 +1,4 @@
-//! Main binary entry point for openapi_client implementation.
+//! Main binary entry point for tft_db_service implementation.
 
 #![allow(missing_docs)]
 

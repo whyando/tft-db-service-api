@@ -1,4 +1,4 @@
-//! Main library entry point for openapi_client implementation.
+//! Main library entry point for tft_db_service implementation.
 
 #![allow(unused_imports)]
 
@@ -22,7 +22,7 @@ use tokio::net::TcpListener;
 #[cfg(not(any(target_os = "macos", target_os = "windows", target_os = "ios")))]
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
-use openapi_client::models;
+use tft_db_service::models;
 
 /// Builds an SSL implementation for Simple HTTPS from some hard-coded file names
 pub async fn create(addr: &str, https: bool) {
@@ -35,7 +35,7 @@ pub async fn create(addr: &str, https: bool) {
     let service = MakeAllowAllAuthenticator::new(service, "cosmo");
 
     let mut service =
-        openapi_client::server::context::MakeAddContext::<_, EmptyContext>::new(
+        tft_db_service::server::context::MakeAddContext::<_, EmptyContext>::new(
             service
         );
 
@@ -94,13 +94,13 @@ impl<C> Server<C> {
 }
 
 
-use openapi_client::{
+use tft_db_service::{
     Api,
     ServerChallengerGetResponse,
     ServerGrandmasterGetResponse,
     ServerMatchListGetResponse,
 };
-use openapi_client::server::MakeService;
+use tft_db_service::server::MakeService;
 use std::error::Error;
 use swagger::ApiError;
 
