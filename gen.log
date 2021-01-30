@@ -1,5 +1,4 @@
 [main] INFO  o.o.codegen.DefaultGenerator - Generating with dryRun=false
-[main] WARN  o.o.c.ignore.CodegenIgnoreProcessor - Output directory does not exist, or is inaccessible. No file (.openapi-generator-ignore) will be evaluated.
 [main] INFO  o.o.codegen.DefaultGenerator - OpenAPI Generator: rust-server (server)
 [main] INFO  o.o.codegen.DefaultGenerator - Generator 'rust-server' is considered stable.
 [main] INFO  o.o.c.languages.RustServerCodegen - Environment variable RUST_POST_PROCESS_FILE not defined. rustfmt will be used by default. To choose a different tool, try 'export RUST_POST_PROCESS_FILE="/usr/local/bin/rustfmt"' (Linux/Mac)
@@ -31,7 +30,7 @@
 [main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api_rs/examples/server-chain.pem
 [main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api_rs/examples/server-key.pem
 [main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api_rs/README.md
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api_rs/.openapi-generator-ignore
+[main] INFO  o.o.codegen.TemplateManager - Skipped /home/jpa/tft-db-service/db_service_api_rs/.openapi-generator-ignore (Skipped by supportingFiles options supplied by user.)
 [main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api_rs/.openapi-generator/VERSION
 [main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service/db_service_api_rs/.openapi-generator/FILES
 ################################################################################
