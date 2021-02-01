@@ -14,7 +14,7 @@ To see how to make this your own, look here:
 [README]((https://openapi-generator.tech))
 
 - API version: 1.0.0
-- Build date: 2021-02-01T19:40:39.812886Z[Europe/London]
+- Build date: 2021-02-01T19:44:58.449085Z[Europe/London]
 
 
 
@@ -98,7 +98,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**riotApi**](docs/default_api.md#riotApi) | **GET** /{riot_url} | Make riot api request or use cached result
+[**riotApi**](docs/default_api.md#riotApi) | **GET** /riot/ | Make riot api request or use cached result
 [****](docs/default_api.md#) | **GET** /{Server}/challenger | Get Challenger League
 [****](docs/default_api.md#) | **GET** /{Server}/grandmaster | Get Grandmaster League
 [****](docs/default_api.md#) | **GET** /{Server}/matchList | Get Grandmaster League

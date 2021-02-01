@@ -12,18 +12,18 @@ externalDocs:
 servers:
 - url: /
 paths:
-  /{riot_url}:
+  /riot/:
     get:
       operationId: riotApi
       parameters:
-      - explode: false
-        in: path
-        name: riot_url
+      - explode: true
+        in: query
+        name: riot_api_url
         required: true
         schema:
           format: uri
           type: string
-        style: simple
+        style: form
       responses:
         "200":
           content:

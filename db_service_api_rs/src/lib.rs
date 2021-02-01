@@ -77,7 +77,7 @@ pub trait Api<C: Send + Sync> {
     /// Make riot api request or use cached result
     async fn riot_api(
         &self,
-        riot_url: String,
+        riot_api_url: String,
         context: &C) -> Result<RiotApiResponse, ApiError>;
 
     /// Get Challenger League
@@ -112,7 +112,7 @@ pub trait ApiNoContext<C: Send + Sync> {
     /// Make riot api request or use cached result
     async fn riot_api(
         &self,
-        riot_url: String,
+        riot_api_url: String,
         ) -> Result<RiotApiResponse, ApiError>;
 
     /// Get Challenger League
@@ -162,11 +162,11 @@ impl<T: Api<C> + Send + Sync, C: Clone + Send + Sync> ApiNoContext<C> for Contex
     /// Make riot api request or use cached result
     async fn riot_api(
         &self,
-        riot_url: String,
+        riot_api_url: String,
         ) -> Result<RiotApiResponse, ApiError>
     {
         let context = self.context().clone();
-        self.api().riot_api(riot_url, &context).await
+        self.api().riot_api(riot_api_url, &context).await
     }
 
     /// Get Challenger League
