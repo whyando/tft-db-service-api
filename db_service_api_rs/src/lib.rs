@@ -13,6 +13,20 @@ pub const API_VERSION: &'static str = "1.0.0";
 
 #[derive(Debug, PartialEq)]
 #[must_use]
+pub enum RiotApiResponse {
+    /// 200 OK
+    Status200
+    (std::collections::HashMap<String, serde_json::Value>)
+    ,
+    /// 400 Bad Request
+    Status400
+    ,
+    /// 500 Internal Server Error
+    Status500
+}
+
+#[derive(Debug, PartialEq)]
+#[must_use]
 pub enum ServerChallengerGetResponse {
     /// 200 OK
     Status200
@@ -60,6 +74,12 @@ pub trait Api<C: Send + Sync> {
         Poll::Ready(Ok(()))
     }
 
+    /// Make riot api request or use cached result
+    async fn riot_api(
+        &self,
+        riot_url: String,
+        context: &C) -> Result<RiotApiResponse, ApiError>;
+
     /// Get Challenger League
     async fn server_challenger_get(
         &self,
@@ -88,6 +108,12 @@ pub trait ApiNoContext<C: Send + Sync> {
     fn poll_ready(&self, _cx: &mut Context) -> Poll<Result<(), Box<dyn Error + Send + Sync + 'static>>>;
 
     fn context(&self) -> &C;
+
+    /// Make riot api request or use cached result
+    async fn riot_api(
+        &self,
+        riot_url: String,
+        ) -> Result<RiotApiResponse, ApiError>;
 
     /// Get Challenger League
     async fn server_challenger_get(
@@ -131,6 +157,16 @@ impl<T: Api<C> + Send + Sync, C: Clone + Send + Sync> ApiNoContext<C> for Contex
 
     fn context(&self) -> &C {
         ContextWrapper::context(self)
+    }
+
+    /// Make riot api request or use cached result
+    async fn riot_api(
+        &self,
+        riot_url: String,
+        ) -> Result<RiotApiResponse, ApiError>
+    {
+        let context = self.context().clone();
+        self.api().riot_api(riot_url, &context).await
     }
 
     /// Get Challenger League

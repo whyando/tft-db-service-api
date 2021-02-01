@@ -22,6 +22,7 @@ pub use crate::context;
 type ServiceFuture = BoxFuture<'static, Result<Response<Body>, crate::ServiceError>>;
 
 use crate::{Api,
+     RiotApiResponse,
      ServerChallengerGetResponse,
      ServerGrandmasterGetResponse,
      ServerMatchListGetResponse
@@ -34,7 +35,8 @@ mod paths {
         pub static ref GLOBAL_REGEX_SET: regex::RegexSet = regex::RegexSet::new(vec![
             r"^/(?P<Server>[^/?#]*)/challenger$",
             r"^/(?P<Server>[^/?#]*)/grandmaster$",
-            r"^/(?P<Server>[^/?#]*)/matchList$"
+            r"^/(?P<Server>[^/?#]*)/matchList$",
+            r"^/(?P<riot_url>[^/?#]*)$"
         ])
         .expect("Unable to create global regex set");
     }
@@ -55,6 +57,12 @@ mod paths {
         pub static ref REGEX_SERVER_MATCHLIST: regex::Regex =
             regex::Regex::new(r"^/(?P<Server>[^/?#]*)/matchList$")
                 .expect("Unable to create regex for SERVER_MATCHLIST");
+    }
+    pub(crate) static ID_RIOT_URL: usize = 3;
+    lazy_static! {
+        pub static ref REGEX_RIOT_URL: regex::Regex =
+            regex::Regex::new(r"^/(?P<riot_url>[^/?#]*)$")
+                .expect("Unable to create regex for RIOT_URL");
     }
 }
 
@@ -159,6 +167,74 @@ impl<T, C> hyper::service::Service<(Request<Body>, C)> for Service<T, C> where
         let path = paths::GLOBAL_REGEX_SET.matches(uri.path());
 
         match &method {
+
+            // RiotApi - GET /{riot_url}
+            &hyper::Method::GET if path.matched(paths::ID_RIOT_URL) => {
+                // Path parameters
+                let path: &str = &uri.path().to_string();
+                let path_params =
+                    paths::REGEX_RIOT_URL
+                    .captures(&path)
+                    .unwrap_or_else(||
+                        panic!("Path {} matched RE RIOT_URL in set but failed match against \"{}\"", path, paths::REGEX_RIOT_URL.as_str())
+                    );
+
+                let param_riot_url = match percent_encoding::percent_decode(path_params["riot_url"].as_bytes()).decode_utf8() {
+                    Ok(param_riot_url) => match param_riot_url.parse::<String>() {
+                        Ok(param_riot_url) => param_riot_url,
+                        Err(e) => return Ok(Response::builder()
+                                        .status(StatusCode::BAD_REQUEST)
+                                        .body(Body::from(format!("Couldn't parse path parameter riot_url: {}", e)))
+                                        .expect("Unable to create Bad Request response for invalid path parameter")),
+                    },
+                    Err(_) => return Ok(Response::builder()
+                                        .status(StatusCode::BAD_REQUEST)
+                                        .body(Body::from(format!("Couldn't percent-decode path parameter as UTF-8: {}", &path_params["riot_url"])))
+                                        .expect("Unable to create Bad Request response for invalid percent decode"))
+                };
+
+                                let result = api_impl.riot_api(
+                                            param_riot_url,
+                                        &context
+                                    ).await;
+                                let mut response = Response::new(Body::empty());
+                                response.headers_mut().insert(
+                                            HeaderName::from_static("x-span-id"),
+                                            HeaderValue::from_str((&context as &dyn Has<XSpanIdString>).get().0.clone().to_string().as_str())
+                                                .expect("Unable to create X-Span-ID header value"));
+
+                                        match result {
+                                            Ok(rsp) => match rsp {
+                                                RiotApiResponse::Status200
+                                                    (body)
+                                                => {
+                                                    *response.status_mut() = StatusCode::from_u16(200).expect("Unable to turn 200 into a StatusCode");
+                                                    response.headers_mut().insert(
+                                                        CONTENT_TYPE,
+                                                        HeaderValue::from_str("application/json")
+                                                            .expect("Unable to create Content-Type header for RIOT_API_STATUS200"));
+                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
+                                                    *response.body_mut() = Body::from(body);
+                                                },
+                                                RiotApiResponse::Status400
+                                                => {
+                                                    *response.status_mut() = StatusCode::from_u16(400).expect("Unable to turn 400 into a StatusCode");
+                                                },
+                                                RiotApiResponse::Status500
+                                                => {
+                                                    *response.status_mut() = StatusCode::from_u16(500).expect("Unable to turn 500 into a StatusCode");
+                                                },
+                                            },
+                                            Err(_) => {
+                                                // Application code returned an error. This should not happen, as the implementation should
+                                                // return a valid response.
+                                                *response.status_mut() = StatusCode::INTERNAL_SERVER_ERROR;
+                                                *response.body_mut() = Body::from("An internal error occurred");
+                                            },
+                                        }
+
+                                        Ok(response)
+            },
 
             // ServerChallengerGet - GET /{Server}/challenger
             &hyper::Method::GET if path.matched(paths::ID_SERVER_CHALLENGER) => {
@@ -395,6 +471,7 @@ impl<T, C> hyper::service::Service<(Request<Body>, C)> for Service<T, C> where
             _ if path.matched(paths::ID_SERVER_CHALLENGER) => method_not_allowed(),
             _ if path.matched(paths::ID_SERVER_GRANDMASTER) => method_not_allowed(),
             _ if path.matched(paths::ID_SERVER_MATCHLIST) => method_not_allowed(),
+            _ if path.matched(paths::ID_RIOT_URL) => method_not_allowed(),
             _ => Ok(Response::builder().status(StatusCode::NOT_FOUND)
                     .body(Body::empty())
                     .expect("Unable to create Not Found response"))
@@ -408,6 +485,8 @@ impl<T> RequestParser<T> for ApiRequestParser {
     fn parse_operation_id(request: &Request<T>) -> Result<&'static str, ()> {
         let path = paths::GLOBAL_REGEX_SET.matches(request.uri().path());
         match request.method() {
+            // RiotApi - GET /{riot_url}
+            &hyper::Method::GET if path.matched(paths::ID_RIOT_URL) => Ok("RiotApi"),
             // ServerChallengerGet - GET /{Server}/challenger
             &hyper::Method::GET if path.matched(paths::ID_SERVER_CHALLENGER) => Ok("ServerChallengerGet"),
             // ServerGrandmasterGet - GET /{Server}/grandmaster

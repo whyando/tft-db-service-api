@@ -10,6 +10,31 @@ externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
 paths:
+  '/{riot_url}':
+    get:
+      summary: Make riot api request or use cached result 
+      operationId: riotApi
+      parameters:
+        - name: riot_url
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uri
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          description: 400 Bad Request
+          content: {}
+        '500':
+          description: 500 Internal Server Error
+          content: {}
   '/{Server}/challenger':
     get:
       summary: Get Challenger League

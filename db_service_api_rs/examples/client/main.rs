@@ -5,6 +5,7 @@
 use futures::{future, Stream, stream};
 #[allow(unused_imports)]
 use tft_db_service::{Api, ApiNoContext, Client, ContextWrapperExt, models,
+                      RiotApiResponse,
                       ServerChallengerGetResponse,
                       ServerGrandmasterGetResponse,
                       ServerMatchListGetResponse,
@@ -29,6 +30,7 @@ fn main() {
         .arg(Arg::with_name("operation")
             .help("Sets the operation to run")
             .possible_values(&[
+                "RiotApi",
                 "ServerChallengerGet",
                 "ServerGrandmasterGet",
                 "ServerMatchListGet",
@@ -75,6 +77,12 @@ fn main() {
     let mut rt = tokio::runtime::Runtime::new().unwrap();
 
     match matches.value_of("operation") {
+        Some("RiotApi") => {
+            let result = rt.block_on(client.riot_api(
+                  "riot_url_example".to_string()
+            ));
+            info!("{:?} (X-Span-ID: {:?})", result, (client.context() as &dyn Has<XSpanIdString>).get().clone());
+        },
         Some("ServerChallengerGet") => {
             let result = rt.block_on(client.server_challenger_get(
                   "server_example".to_string()
