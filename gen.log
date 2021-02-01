@@ -11,28 +11,28 @@
 [main] WARN  o.o.codegen.DefaultCodegen - Empty operationId found for path: get /{Server}/grandmaster. Renamed to auto-generated operationId: serverGrandmasterGet
 [main] WARN  o.o.codegen.DefaultCodegen - Empty operationId found for path: get /{Server}/matchList. Renamed to auto-generated operationId: serverMatchListGet
 [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/docs/default_api.md
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/docs/default_api.md
 [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/api/openapi.yaml
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/Cargo.toml
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/.cargo/config
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/.gitignore
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/src/lib.rs
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/src/context.rs
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/src/models.rs
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/src/header.rs
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/src/server/mod.rs
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/src/client/mod.rs
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/examples/server/main.rs
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/examples/server/server.rs
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/examples/client/main.rs
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/examples/ca.pem
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/examples/server-chain.pem
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/examples/server-key.pem
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/README.md
-[main] INFO  o.o.codegen.TemplateManager - Skipped /home/jpa/tft-db-service-api/db_service_api_rs/.openapi-generator-ignore (Skipped by supportingFiles options supplied by user.)
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/.openapi-generator/VERSION
-[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-service-api/db_service_api_rs/.openapi-generator/FILES
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/api/openapi.yaml
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/Cargo.toml
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/.cargo/config
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/.gitignore
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/src/lib.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/src/context.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/src/models.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/src/header.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/src/server/mod.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/src/client/mod.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/examples/server/main.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/examples/server/server.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/examples/client/main.rs
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/examples/ca.pem
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/examples/server-chain.pem
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/examples/server-key.pem
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/README.md
+[main] INFO  o.o.codegen.TemplateManager - Skipped /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/.openapi-generator-ignore (Skipped by supportingFiles options supplied by user.)
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/.openapi-generator/VERSION
+[main] INFO  o.o.codegen.TemplateManager - writing file /home/jpa/tft-db-server/tft-db-service-api/db_service_api_rs/.openapi-generator/FILES
 ################################################################################
 # Thanks for using OpenAPI Generator.                                          #
 # Please consider donation to help us maintain this project 🙏                 #

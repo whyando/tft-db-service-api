@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # ****
-> String (server)
+> serde_json::Value (server)
 Get Challenger League
 
 ### Required Parameters
@@ -21,7 +21,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**String**](string.md)
+[**serde_json::Value**](object.md)
 
 ### Authorization
 
@@ -35,7 +35,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # ****
-> String (server)
+> serde_json::Value (server)
 Get Grandmaster League
 
 ### Required Parameters
@@ -46,7 +46,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**String**](string.md)
+[**serde_json::Value**](object.md)
 
 ### Authorization
 
@@ -60,7 +60,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # ****
-> String (server, player)
+> serde_json::Value (server, player)
 Get Grandmaster League
 
 ### Required Parameters
@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**String**](string.md)
+[**serde_json::Value**](object.md)
 
 ### Authorization
 

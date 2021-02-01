@@ -16,7 +16,7 @@ pub const API_VERSION: &'static str = "1.0.0";
 pub enum ServerChallengerGetResponse {
     /// 200 OK
     Status200
-    (String)
+    (serde_json::Value)
     ,
     /// 400 Bad Request
     Status400
@@ -30,7 +30,7 @@ pub enum ServerChallengerGetResponse {
 pub enum ServerGrandmasterGetResponse {
     /// 200 OK
     Status200
-    (String)
+    (serde_json::Value)
     ,
     /// 400 Bad Request
     Status400
@@ -44,7 +44,7 @@ pub enum ServerGrandmasterGetResponse {
 pub enum ServerMatchListGetResponse {
     /// 200 OK
     Status200
-    (String)
+    (serde_json::Value)
     ,
     /// 400 Bad Request
     Status400
