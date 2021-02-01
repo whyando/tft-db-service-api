@@ -33,14 +33,14 @@ mod paths {
 
     lazy_static! {
         pub static ref GLOBAL_REGEX_SET: regex::RegexSet = regex::RegexSet::new(vec![
-            r"^/riot/$",
+            r"^/riotApi$",
             r"^/(?P<Server>[^/?#]*)/challenger$",
             r"^/(?P<Server>[^/?#]*)/grandmaster$",
             r"^/(?P<Server>[^/?#]*)/matchList$"
         ])
         .expect("Unable to create global regex set");
     }
-    pub(crate) static ID_RIOT_: usize = 0;
+    pub(crate) static ID_RIOTAPI: usize = 0;
     pub(crate) static ID_SERVER_CHALLENGER: usize = 1;
     lazy_static! {
         pub static ref REGEX_SERVER_CHALLENGER: regex::Regex =
@@ -163,37 +163,37 @@ impl<T, C> hyper::service::Service<(Request<Body>, C)> for Service<T, C> where
 
         match &method {
 
-            // RiotApi - GET /riot/
-            &hyper::Method::GET if path.matched(paths::ID_RIOT_) => {
+            // RiotApi - GET /riotApi
+            &hyper::Method::GET if path.matched(paths::ID_RIOTAPI) => {
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
                 let query_params = form_urlencoded::parse(uri.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
-                let param_riot_api_url = query_params.iter().filter(|e| e.0 == "riot_api_url").map(|e| e.1.to_owned())
+                let param_url = query_params.iter().filter(|e| e.0 == "url").map(|e| e.1.to_owned())
                     .nth(0);
-                let param_riot_api_url = match param_riot_api_url {
-                    Some(param_riot_api_url) => {
-                        let param_riot_api_url =
+                let param_url = match param_url {
+                    Some(param_url) => {
+                        let param_url =
                             <String as std::str::FromStr>::from_str
-                                (&param_riot_api_url);
-                        match param_riot_api_url {
-                            Ok(param_riot_api_url) => Some(param_riot_api_url),
+                                (&param_url);
+                        match param_url {
+                            Ok(param_url) => Some(param_url),
                             Err(e) => return Ok(Response::builder()
                                 .status(StatusCode::BAD_REQUEST)
-                                .body(Body::from(format!("Couldn't parse query parameter riot_api_url - doesn't match schema: {}", e)))
-                                .expect("Unable to create Bad Request response for invalid query parameter riot_api_url")),
+                                .body(Body::from(format!("Couldn't parse query parameter url - doesn't match schema: {}", e)))
+                                .expect("Unable to create Bad Request response for invalid query parameter url")),
                         }
                     },
                     None => None,
                 };
-                let param_riot_api_url = match param_riot_api_url {
-                    Some(param_riot_api_url) => param_riot_api_url,
+                let param_url = match param_url {
+                    Some(param_url) => param_url,
                     None => return Ok(Response::builder()
                         .status(StatusCode::BAD_REQUEST)
-                        .body(Body::from("Missing required query parameter riot_api_url"))
-                        .expect("Unable to create Bad Request response for missing query parameter riot_api_url")),
+                        .body(Body::from("Missing required query parameter url"))
+                        .expect("Unable to create Bad Request response for missing query parameter url")),
                 };
 
                                 let result = api_impl.riot_api(
-                                            param_riot_api_url,
+                                            param_url,
                                         &context
                                     ).await;
                                 let mut response = Response::new(Body::empty());
@@ -467,7 +467,7 @@ impl<T, C> hyper::service::Service<(Request<Body>, C)> for Service<T, C> where
                                         Ok(response)
             },
 
-            _ if path.matched(paths::ID_RIOT_) => method_not_allowed(),
+            _ if path.matched(paths::ID_RIOTAPI) => method_not_allowed(),
             _ if path.matched(paths::ID_SERVER_CHALLENGER) => method_not_allowed(),
             _ if path.matched(paths::ID_SERVER_GRANDMASTER) => method_not_allowed(),
             _ if path.matched(paths::ID_SERVER_MATCHLIST) => method_not_allowed(),
@@ -484,8 +484,8 @@ impl<T> RequestParser<T> for ApiRequestParser {
     fn parse_operation_id(request: &Request<T>) -> Result<&'static str, ()> {
         let path = paths::GLOBAL_REGEX_SET.matches(request.uri().path());
         match request.method() {
-            // RiotApi - GET /riot/
-            &hyper::Method::GET if path.matched(paths::ID_RIOT_) => Ok("RiotApi"),
+            // RiotApi - GET /riotApi
+            &hyper::Method::GET if path.matched(paths::ID_RIOTAPI) => Ok("RiotApi"),
             // ServerChallengerGet - GET /{Server}/challenger
             &hyper::Method::GET if path.matched(paths::ID_SERVER_CHALLENGER) => Ok("ServerChallengerGet"),
             // ServerGrandmasterGet - GET /{Server}/grandmaster

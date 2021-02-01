@@ -10,12 +10,12 @@ externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
 paths:
-  '/riot/':
+  '/riotApi':
     get:
       summary: Make riot api request or use cached result 
       operationId: riotApi
       parameters:
-        - name: riot_api_url
+        - name: url
           in: query
           required: true
           schema:

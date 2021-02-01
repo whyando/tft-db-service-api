@@ -385,20 +385,20 @@ impl<S, C> Api<C> for Client<S, C> where
 
     async fn riot_api(
         &self,
-        param_riot_api_url: String,
+        param_url: String,
         context: &C) -> Result<RiotApiResponse, ApiError>
     {
         let mut client_service = self.client_service.clone();
         let mut uri = format!(
-            "{}/riot/",
+            "{}/riotApi",
             self.base_path
         );
 
         // Query parameters
         let query_string = {
             let mut query_string = form_urlencoded::Serializer::new("".to_owned());
-                query_string.append_pair("riot_api_url",
-                    &param_riot_api_url.to_string());
+                query_string.append_pair("url",
+                    &param_url.to_string());
             query_string.finish()
         };
         if !query_string.is_empty() {

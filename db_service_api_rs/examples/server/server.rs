@@ -111,11 +111,11 @@ impl<C> Api<C> for Server<C> where C: Has<XSpanIdString> + Send + Sync
     /// Make riot api request or use cached result
     async fn riot_api(
         &self,
-        riot_api_url: String,
+        url: String,
         context: &C) -> Result<RiotApiResponse, ApiError>
     {
         let context = context.clone();
-        info!("riot_api(\"{}\") - X-Span-ID: {:?}", riot_api_url, context.get().0.clone());
+        info!("riot_api(\"{}\") - X-Span-ID: {:?}", url, context.get().0.clone());
         Err("Generic failuare".into())
     }
 
