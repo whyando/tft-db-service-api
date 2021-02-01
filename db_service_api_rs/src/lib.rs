@@ -16,7 +16,7 @@ pub const API_VERSION: &'static str = "1.0.0";
 pub enum RiotApiResponse {
     /// 200 OK
     Status200
-    (std::collections::HashMap<String, serde_json::Value>)
+    (serde_json::Value)
     ,
     /// 400 Bad Request
     Status400

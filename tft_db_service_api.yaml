@@ -28,7 +28,6 @@ paths:
             application/json:
               schema:
                 type: object
-                additionalProperties: true
         '400':
           description: 400 Bad Request
           content: {}

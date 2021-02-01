@@ -29,7 +29,6 @@ paths:
           content:
             application/json:
               schema:
-                additionalProperties: true
                 type: object
           description: 200 OK
         "400":

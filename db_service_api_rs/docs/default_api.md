@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **riotApi**
-> std::collections::HashMap<String, serde_json::Value> riotApi(riot_url)
+> serde_json::Value riotApi(riot_url)
 Make riot api request or use cached result
 
 ### Required Parameters
@@ -22,7 +22,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**std::collections::HashMap<String, serde_json::Value>**](object.md)
+[**serde_json::Value**](object.md)
 
 ### Authorization
 
