@@ -73,7 +73,8 @@ fn main() {
     match matches.value_of("operation") {
         Some("RiotApi") => {
             let result = rt.block_on(client.riot_api(
-                  "url_example".to_string()
+                  "url_example".to_string(),
+                  Some(true)
             ));
             info!("{:?} (X-Span-ID: {:?})", result, (client.context() as &dyn Has<XSpanIdString>).get().clone());
         },

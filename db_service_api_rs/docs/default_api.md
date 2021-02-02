@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **riotApi**
-> serde_json::Value riotApi(url)
+> serde_json::Value riotApi(url, optional)
 Make riot api request or use cached result
 
 ### Required Parameters
@@ -16,6 +16,15 @@ Make riot api request or use cached result
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
   **url** | **String**|  | 
+ **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a map[string]interface{}.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **url** | **String**|  | 
+ **force** | **bool**|  | [default to false]
 
 ### Return type
 

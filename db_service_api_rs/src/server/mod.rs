@@ -167,9 +167,27 @@ impl<T, C> hyper::service::Service<(Request<Body>, C)> for Service<T, C> where
                         .body(Body::from("Missing required query parameter url"))
                         .expect("Unable to create Bad Request response for missing query parameter url")),
                 };
+                let param_force = query_params.iter().filter(|e| e.0 == "force").map(|e| e.1.to_owned())
+                    .nth(0);
+                let param_force = match param_force {
+                    Some(param_force) => {
+                        let param_force =
+                            <bool as std::str::FromStr>::from_str
+                                (&param_force);
+                        match param_force {
+                            Ok(param_force) => Some(param_force),
+                            Err(e) => return Ok(Response::builder()
+                                .status(StatusCode::BAD_REQUEST)
+                                .body(Body::from(format!("Couldn't parse query parameter force - doesn't match schema: {}", e)))
+                                .expect("Unable to create Bad Request response for invalid query parameter force")),
+                        }
+                    },
+                    None => None,
+                };
 
                                 let result = api_impl.riot_api(
                                             param_url,
+                                            param_force,
                                         &context
                                     ).await;
                                 let mut response = Response::new(Body::empty());

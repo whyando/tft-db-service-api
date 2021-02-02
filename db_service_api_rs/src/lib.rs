@@ -36,6 +36,7 @@ pub trait Api<C: Send + Sync> {
     async fn riot_api(
         &self,
         url: String,
+        force: Option<bool>,
         context: &C) -> Result<RiotApiResponse, ApiError>;
 
 }
@@ -52,6 +53,7 @@ pub trait ApiNoContext<C: Send + Sync> {
     async fn riot_api(
         &self,
         url: String,
+        force: Option<bool>,
         ) -> Result<RiotApiResponse, ApiError>;
 
 }
@@ -83,10 +85,11 @@ impl<T: Api<C> + Send + Sync, C: Clone + Send + Sync> ApiNoContext<C> for Contex
     async fn riot_api(
         &self,
         url: String,
+        force: Option<bool>,
         ) -> Result<RiotApiResponse, ApiError>
     {
         let context = self.context().clone();
-        self.api().riot_api(url, &context).await
+        self.api().riot_api(url, force, &context).await
     }
 
 }

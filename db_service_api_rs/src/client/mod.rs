@@ -383,6 +383,7 @@ impl<S, C> Api<C> for Client<S, C> where
     async fn riot_api(
         &self,
         param_url: String,
+        param_force: Option<bool>,
         context: &C) -> Result<RiotApiResponse, ApiError>
     {
         let mut client_service = self.client_service.clone();
@@ -396,6 +397,10 @@ impl<S, C> Api<C> for Client<S, C> where
             let mut query_string = form_urlencoded::Serializer::new("".to_owned());
                 query_string.append_pair("url",
                     &param_url.to_string());
+            if let Some(param_force) = param_force {
+                query_string.append_pair("force",
+                    &param_force.to_string());
+            }
             query_string.finish()
         };
         if !query_string.is_empty() {
