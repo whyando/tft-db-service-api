@@ -25,48 +25,6 @@ pub enum RiotApiResponse {
     Status500
 }
 
-#[derive(Debug, PartialEq)]
-#[must_use]
-pub enum ServerChallengerGetResponse {
-    /// 200 OK
-    Status200
-    (serde_json::Value)
-    ,
-    /// 400 Bad Request
-    Status400
-    ,
-    /// 500 Internal Server Error
-    Status500
-}
-
-#[derive(Debug, PartialEq)]
-#[must_use]
-pub enum ServerGrandmasterGetResponse {
-    /// 200 OK
-    Status200
-    (serde_json::Value)
-    ,
-    /// 400 Bad Request
-    Status400
-    ,
-    /// 500 Internal Server Error
-    Status500
-}
-
-#[derive(Debug, PartialEq)]
-#[must_use]
-pub enum ServerMatchListGetResponse {
-    /// 200 OK
-    Status200
-    (serde_json::Value)
-    ,
-    /// 400 Bad Request
-    Status400
-    ,
-    /// 500 Internal Server Error
-    Status500
-}
-
 /// API
 #[async_trait]
 pub trait Api<C: Send + Sync> {
@@ -79,25 +37,6 @@ pub trait Api<C: Send + Sync> {
         &self,
         url: String,
         context: &C) -> Result<RiotApiResponse, ApiError>;
-
-    /// Get Challenger League
-    async fn server_challenger_get(
-        &self,
-        server: String,
-        context: &C) -> Result<ServerChallengerGetResponse, ApiError>;
-
-    /// Get Grandmaster League
-    async fn server_grandmaster_get(
-        &self,
-        server: String,
-        context: &C) -> Result<ServerGrandmasterGetResponse, ApiError>;
-
-    /// Get Grandmaster League
-    async fn server_match_list_get(
-        &self,
-        server: String,
-        player: String,
-        context: &C) -> Result<ServerMatchListGetResponse, ApiError>;
 
 }
 
@@ -114,25 +53,6 @@ pub trait ApiNoContext<C: Send + Sync> {
         &self,
         url: String,
         ) -> Result<RiotApiResponse, ApiError>;
-
-    /// Get Challenger League
-    async fn server_challenger_get(
-        &self,
-        server: String,
-        ) -> Result<ServerChallengerGetResponse, ApiError>;
-
-    /// Get Grandmaster League
-    async fn server_grandmaster_get(
-        &self,
-        server: String,
-        ) -> Result<ServerGrandmasterGetResponse, ApiError>;
-
-    /// Get Grandmaster League
-    async fn server_match_list_get(
-        &self,
-        server: String,
-        player: String,
-        ) -> Result<ServerMatchListGetResponse, ApiError>;
 
 }
 
@@ -167,37 +87,6 @@ impl<T: Api<C> + Send + Sync, C: Clone + Send + Sync> ApiNoContext<C> for Contex
     {
         let context = self.context().clone();
         self.api().riot_api(url, &context).await
-    }
-
-    /// Get Challenger League
-    async fn server_challenger_get(
-        &self,
-        server: String,
-        ) -> Result<ServerChallengerGetResponse, ApiError>
-    {
-        let context = self.context().clone();
-        self.api().server_challenger_get(server, &context).await
-    }
-
-    /// Get Grandmaster League
-    async fn server_grandmaster_get(
-        &self,
-        server: String,
-        ) -> Result<ServerGrandmasterGetResponse, ApiError>
-    {
-        let context = self.context().clone();
-        self.api().server_grandmaster_get(server, &context).await
-    }
-
-    /// Get Grandmaster League
-    async fn server_match_list_get(
-        &self,
-        server: String,
-        player: String,
-        ) -> Result<ServerMatchListGetResponse, ApiError>
-    {
-        let context = self.context().clone();
-        self.api().server_match_list_get(server, player, &context).await
     }
 
 }

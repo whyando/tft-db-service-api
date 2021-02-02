@@ -14,7 +14,7 @@ To see how to make this your own, look here:
 [README]((https://openapi-generator.tech))
 
 - API version: 1.0.0
-- Build date: 2021-02-01T19:47:54.224919Z[Europe/London]
+- Build date: 2021-02-02T14:14:04.062929Z[Europe/London]
 
 
 
@@ -62,9 +62,6 @@ To run a client, follow one of the following simple steps:
 
 ```
 cargo run --example client RiotApi
-cargo run --example client ServerChallengerGet
-cargo run --example client ServerGrandmasterGet
-cargo run --example client ServerMatchListGet
 ```
 
 ### HTTPS
@@ -99,9 +96,6 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**riotApi**](docs/default_api.md#riotApi) | **GET** /riotApi | Make riot api request or use cached result
-[****](docs/default_api.md#) | **GET** /{Server}/challenger | Get Challenger League
-[****](docs/default_api.md#) | **GET** /{Server}/grandmaster | Get Grandmaster League
-[****](docs/default_api.md#) | **GET** /{Server}/matchList | Get Grandmaster League
 
 
 ## Documentation For Models

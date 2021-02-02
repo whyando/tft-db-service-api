@@ -97,9 +97,6 @@ impl<C> Server<C> {
 use tft_db_service::{
     Api,
     RiotApiResponse,
-    ServerChallengerGetResponse,
-    ServerGrandmasterGetResponse,
-    ServerMatchListGetResponse,
 };
 use tft_db_service::server::MakeService;
 use std::error::Error;
@@ -116,40 +113,6 @@ impl<C> Api<C> for Server<C> where C: Has<XSpanIdString> + Send + Sync
     {
         let context = context.clone();
         info!("riot_api(\"{}\") - X-Span-ID: {:?}", url, context.get().0.clone());
-        Err("Generic failuare".into())
-    }
-
-    /// Get Challenger League
-    async fn server_challenger_get(
-        &self,
-        server: String,
-        context: &C) -> Result<ServerChallengerGetResponse, ApiError>
-    {
-        let context = context.clone();
-        info!("server_challenger_get(\"{}\") - X-Span-ID: {:?}", server, context.get().0.clone());
-        Err("Generic failuare".into())
-    }
-
-    /// Get Grandmaster League
-    async fn server_grandmaster_get(
-        &self,
-        server: String,
-        context: &C) -> Result<ServerGrandmasterGetResponse, ApiError>
-    {
-        let context = context.clone();
-        info!("server_grandmaster_get(\"{}\") - X-Span-ID: {:?}", server, context.get().0.clone());
-        Err("Generic failuare".into())
-    }
-
-    /// Get Grandmaster League
-    async fn server_match_list_get(
-        &self,
-        server: String,
-        player: String,
-        context: &C) -> Result<ServerMatchListGetResponse, ApiError>
-    {
-        let context = context.clone();
-        info!("server_match_list_get(\"{}\", \"{}\") - X-Span-ID: {:?}", server, player, context.get().0.clone());
         Err("Generic failuare".into())
     }
 

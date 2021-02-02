@@ -6,9 +6,6 @@ use futures::{future, Stream, stream};
 #[allow(unused_imports)]
 use tft_db_service::{Api, ApiNoContext, Client, ContextWrapperExt, models,
                       RiotApiResponse,
-                      ServerChallengerGetResponse,
-                      ServerGrandmasterGetResponse,
-                      ServerMatchListGetResponse,
                      };
 use clap::{App, Arg};
 
@@ -31,9 +28,6 @@ fn main() {
             .help("Sets the operation to run")
             .possible_values(&[
                 "RiotApi",
-                "ServerChallengerGet",
-                "ServerGrandmasterGet",
-                "ServerMatchListGet",
             ])
             .required(true)
             .index(1))
@@ -80,25 +74,6 @@ fn main() {
         Some("RiotApi") => {
             let result = rt.block_on(client.riot_api(
                   "url_example".to_string()
-            ));
-            info!("{:?} (X-Span-ID: {:?})", result, (client.context() as &dyn Has<XSpanIdString>).get().clone());
-        },
-        Some("ServerChallengerGet") => {
-            let result = rt.block_on(client.server_challenger_get(
-                  "server_example".to_string()
-            ));
-            info!("{:?} (X-Span-ID: {:?})", result, (client.context() as &dyn Has<XSpanIdString>).get().clone());
-        },
-        Some("ServerGrandmasterGet") => {
-            let result = rt.block_on(client.server_grandmaster_get(
-                  "server_example".to_string()
-            ));
-            info!("{:?} (X-Span-ID: {:?})", result, (client.context() as &dyn Has<XSpanIdString>).get().clone());
-        },
-        Some("ServerMatchListGet") => {
-            let result = rt.block_on(client.server_match_list_get(
-                  "server_example".to_string(),
-                  "player_example".to_string()
             ));
             info!("{:?} (X-Span-ID: {:?})", result, (client.context() as &dyn Has<XSpanIdString>).get().clone());
         },
