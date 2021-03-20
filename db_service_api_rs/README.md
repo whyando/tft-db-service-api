@@ -14,7 +14,7 @@ To see how to make this your own, look here:
 [README]((https://openapi-generator.tech))
 
 - API version: 1.0.0
-- Build date: 2021-02-02T19:47:43.401875Z[Europe/London]
+- Build date: 2021-03-20T16:49:17.286599Z[Europe/London]
 
 
 
@@ -61,6 +61,7 @@ cargo run --example server
 To run a client, follow one of the following simple steps:
 
 ```
+cargo run --example client MatchHistory
 cargo run --example client RiotApi
 ```
 
@@ -95,6 +96,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**matchHistory**](docs/default_api.md#matchHistory) | **GET** /matchHistory | Get match history for a single summoner
 [**riotApi**](docs/default_api.md#riotApi) | **GET** /riotApi | Make riot api request or use cached result
 
 

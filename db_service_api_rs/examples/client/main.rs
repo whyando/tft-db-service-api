@@ -5,6 +5,7 @@
 use futures::{future, Stream, stream};
 #[allow(unused_imports)]
 use tft_db_service::{Api, ApiNoContext, Client, ContextWrapperExt, models,
+                      MatchHistoryResponse,
                       RiotApiResponse,
                      };
 use clap::{App, Arg};
@@ -27,6 +28,7 @@ fn main() {
         .arg(Arg::with_name("operation")
             .help("Sets the operation to run")
             .possible_values(&[
+                "MatchHistory",
                 "RiotApi",
             ])
             .required(true)
@@ -71,6 +73,13 @@ fn main() {
     let mut rt = tokio::runtime::Runtime::new().unwrap();
 
     match matches.value_of("operation") {
+        Some("MatchHistory") => {
+            let result = rt.block_on(client.match_history(
+                  Some("puuid_example".to_string()),
+                  Some("name_example".to_string())
+            ));
+            info!("{:?} (X-Span-ID: {:?})", result, (client.context() as &dyn Has<XSpanIdString>).get().clone());
+        },
         Some("RiotApi") => {
             let result = rt.block_on(client.riot_api(
                   "url_example".to_string(),

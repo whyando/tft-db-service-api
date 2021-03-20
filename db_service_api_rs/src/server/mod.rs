@@ -22,6 +22,7 @@ pub use crate::context;
 type ServiceFuture = BoxFuture<'static, Result<Response<Body>, crate::ServiceError>>;
 
 use crate::{Api,
+     MatchHistoryResponse,
      RiotApiResponse
 };
 
@@ -30,11 +31,13 @@ mod paths {
 
     lazy_static! {
         pub static ref GLOBAL_REGEX_SET: regex::RegexSet = regex::RegexSet::new(vec![
+            r"^/matchHistory$",
             r"^/riotApi$"
         ])
         .expect("Unable to create global regex set");
     }
-    pub(crate) static ID_RIOTAPI: usize = 0;
+    pub(crate) static ID_MATCHHISTORY: usize = 0;
+    pub(crate) static ID_RIOTAPI: usize = 1;
 }
 
 pub struct MakeService<T, C> where
@@ -139,6 +142,89 @@ impl<T, C> hyper::service::Service<(Request<Body>, C)> for Service<T, C> where
 
         match &method {
 
+            // MatchHistory - GET /matchHistory
+            &hyper::Method::GET if path.matched(paths::ID_MATCHHISTORY) => {
+                // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
+                let query_params = form_urlencoded::parse(uri.query().unwrap_or_default().as_bytes()).collect::<Vec<_>>();
+                let param_puuid = query_params.iter().filter(|e| e.0 == "puuid").map(|e| e.1.to_owned())
+                    .nth(0);
+                let param_puuid = match param_puuid {
+                    Some(param_puuid) => {
+                        let param_puuid =
+                            <String as std::str::FromStr>::from_str
+                                (&param_puuid);
+                        match param_puuid {
+                            Ok(param_puuid) => Some(param_puuid),
+                            Err(e) => return Ok(Response::builder()
+                                .status(StatusCode::BAD_REQUEST)
+                                .body(Body::from(format!("Couldn't parse query parameter puuid - doesn't match schema: {}", e)))
+                                .expect("Unable to create Bad Request response for invalid query parameter puuid")),
+                        }
+                    },
+                    None => None,
+                };
+                let param_name = query_params.iter().filter(|e| e.0 == "name").map(|e| e.1.to_owned())
+                    .nth(0);
+                let param_name = match param_name {
+                    Some(param_name) => {
+                        let param_name =
+                            <String as std::str::FromStr>::from_str
+                                (&param_name);
+                        match param_name {
+                            Ok(param_name) => Some(param_name),
+                            Err(e) => return Ok(Response::builder()
+                                .status(StatusCode::BAD_REQUEST)
+                                .body(Body::from(format!("Couldn't parse query parameter name - doesn't match schema: {}", e)))
+                                .expect("Unable to create Bad Request response for invalid query parameter name")),
+                        }
+                    },
+                    None => None,
+                };
+
+                                let result = api_impl.match_history(
+                                            param_puuid,
+                                            param_name,
+                                        &context
+                                    ).await;
+                                let mut response = Response::new(Body::empty());
+                                response.headers_mut().insert(
+                                            HeaderName::from_static("x-span-id"),
+                                            HeaderValue::from_str((&context as &dyn Has<XSpanIdString>).get().0.clone().to_string().as_str())
+                                                .expect("Unable to create X-Span-ID header value"));
+
+                                        match result {
+                                            Ok(rsp) => match rsp {
+                                                MatchHistoryResponse::Status200
+                                                    (body)
+                                                => {
+                                                    *response.status_mut() = StatusCode::from_u16(200).expect("Unable to turn 200 into a StatusCode");
+                                                    response.headers_mut().insert(
+                                                        CONTENT_TYPE,
+                                                        HeaderValue::from_str("application/json")
+                                                            .expect("Unable to create Content-Type header for MATCH_HISTORY_STATUS200"));
+                                                    let body = serde_json::to_string(&body).expect("impossible to fail to serialize");
+                                                    *response.body_mut() = Body::from(body);
+                                                },
+                                                MatchHistoryResponse::Status400
+                                                => {
+                                                    *response.status_mut() = StatusCode::from_u16(400).expect("Unable to turn 400 into a StatusCode");
+                                                },
+                                                MatchHistoryResponse::Status500
+                                                => {
+                                                    *response.status_mut() = StatusCode::from_u16(500).expect("Unable to turn 500 into a StatusCode");
+                                                },
+                                            },
+                                            Err(_) => {
+                                                // Application code returned an error. This should not happen, as the implementation should
+                                                // return a valid response.
+                                                *response.status_mut() = StatusCode::INTERNAL_SERVER_ERROR;
+                                                *response.body_mut() = Body::from("An internal error occurred");
+                                            },
+                                        }
+
+                                        Ok(response)
+            },
+
             // RiotApi - GET /riotApi
             &hyper::Method::GET if path.matched(paths::ID_RIOTAPI) => {
                 // Query parameters (note that non-required or collection query parameters will ignore garbage values, rather than causing a 400 response)
@@ -229,6 +315,7 @@ impl<T, C> hyper::service::Service<(Request<Body>, C)> for Service<T, C> where
                                         Ok(response)
             },
 
+            _ if path.matched(paths::ID_MATCHHISTORY) => method_not_allowed(),
             _ if path.matched(paths::ID_RIOTAPI) => method_not_allowed(),
             _ => Ok(Response::builder().status(StatusCode::NOT_FOUND)
                     .body(Body::empty())
@@ -243,6 +330,8 @@ impl<T> RequestParser<T> for ApiRequestParser {
     fn parse_operation_id(request: &Request<T>) -> Result<&'static str, ()> {
         let path = paths::GLOBAL_REGEX_SET.matches(request.uri().path());
         match request.method() {
+            // MatchHistory - GET /matchHistory
+            &hyper::Method::GET if path.matched(paths::ID_MATCHHISTORY) => Ok("MatchHistory"),
             // RiotApi - GET /riotApi
             &hyper::Method::GET if path.matched(paths::ID_RIOTAPI) => Ok("RiotApi"),
             _ => Err(()),

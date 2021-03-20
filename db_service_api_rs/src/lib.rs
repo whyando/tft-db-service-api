@@ -13,6 +13,20 @@ pub const API_VERSION: &'static str = "1.0.0";
 
 #[derive(Debug, PartialEq)]
 #[must_use]
+pub enum MatchHistoryResponse {
+    /// 200 OK
+    Status200
+    (serde_json::Value)
+    ,
+    /// 400 Bad Request
+    Status400
+    ,
+    /// 500 Internal Server Error
+    Status500
+}
+
+#[derive(Debug, PartialEq)]
+#[must_use]
 pub enum RiotApiResponse {
     /// 200 OK
     Status200
@@ -32,6 +46,13 @@ pub trait Api<C: Send + Sync> {
         Poll::Ready(Ok(()))
     }
 
+    /// Get match history for a single summoner
+    async fn match_history(
+        &self,
+        puuid: Option<String>,
+        name: Option<String>,
+        context: &C) -> Result<MatchHistoryResponse, ApiError>;
+
     /// Make riot api request or use cached result
     async fn riot_api(
         &self,
@@ -48,6 +69,13 @@ pub trait ApiNoContext<C: Send + Sync> {
     fn poll_ready(&self, _cx: &mut Context) -> Poll<Result<(), Box<dyn Error + Send + Sync + 'static>>>;
 
     fn context(&self) -> &C;
+
+    /// Get match history for a single summoner
+    async fn match_history(
+        &self,
+        puuid: Option<String>,
+        name: Option<String>,
+        ) -> Result<MatchHistoryResponse, ApiError>;
 
     /// Make riot api request or use cached result
     async fn riot_api(
@@ -79,6 +107,17 @@ impl<T: Api<C> + Send + Sync, C: Clone + Send + Sync> ApiNoContext<C> for Contex
 
     fn context(&self) -> &C {
         ContextWrapper::context(self)
+    }
+
+    /// Get match history for a single summoner
+    async fn match_history(
+        &self,
+        puuid: Option<String>,
+        name: Option<String>,
+        ) -> Result<MatchHistoryResponse, ApiError>
+    {
+        let context = self.context().clone();
+        self.api().match_history(puuid, name, &context).await
     }
 
     /// Make riot api request or use cached result

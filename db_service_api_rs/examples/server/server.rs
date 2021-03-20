@@ -96,6 +96,7 @@ impl<C> Server<C> {
 
 use tft_db_service::{
     Api,
+    MatchHistoryResponse,
     RiotApiResponse,
 };
 use tft_db_service::server::MakeService;
@@ -105,6 +106,18 @@ use swagger::ApiError;
 #[async_trait]
 impl<C> Api<C> for Server<C> where C: Has<XSpanIdString> + Send + Sync
 {
+    /// Get match history for a single summoner
+    async fn match_history(
+        &self,
+        puuid: Option<String>,
+        name: Option<String>,
+        context: &C) -> Result<MatchHistoryResponse, ApiError>
+    {
+        let context = context.clone();
+        info!("match_history({:?}, {:?}) - X-Span-ID: {:?}", puuid, name, context.get().0.clone());
+        Err("Generic failuare".into())
+    }
+
     /// Make riot api request or use cached result
     async fn riot_api(
         &self,
