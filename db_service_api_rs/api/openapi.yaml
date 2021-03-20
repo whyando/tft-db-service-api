@@ -40,10 +40,16 @@ paths:
                 type: object
           description: 200 OK
         "400":
-          content: {}
+          content:
+            text/plain:
+              schema:
+                type: string
           description: 400 Bad Request
         "500":
-          content: {}
+          content:
+            text/plain:
+              schema:
+                type: string
           description: 500 Internal Server Error
       summary: Make riot api request or use cached result
   /matchHistory:
@@ -72,10 +78,16 @@ paths:
                 type: object
           description: 200 OK
         "400":
-          content: {}
+          content:
+            text/plain:
+              schema:
+                type: string
           description: 400 Bad Request
         "500":
-          content: {}
+          content:
+            text/plain:
+              schema:
+                type: string
           description: 500 Internal Server Error
       summary: Get match history for a single summoner
 components:

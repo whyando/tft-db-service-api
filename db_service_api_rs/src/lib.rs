@@ -20,9 +20,11 @@ pub enum MatchHistoryResponse {
     ,
     /// 400 Bad Request
     Status400
+    (String)
     ,
     /// 500 Internal Server Error
     Status500
+    (String)
 }
 
 #[derive(Debug, PartialEq)]
@@ -34,9 +36,11 @@ pub enum RiotApiResponse {
     ,
     /// 400 Bad Request
     Status400
+    (String)
     ,
     /// 500 Internal Server Error
     Status500
+    (String)
 }
 
 /// API

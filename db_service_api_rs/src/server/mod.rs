@@ -206,12 +206,26 @@ impl<T, C> hyper::service::Service<(Request<Body>, C)> for Service<T, C> where
                                                     *response.body_mut() = Body::from(body);
                                                 },
                                                 MatchHistoryResponse::Status400
+                                                    (body)
                                                 => {
                                                     *response.status_mut() = StatusCode::from_u16(400).expect("Unable to turn 400 into a StatusCode");
+                                                    response.headers_mut().insert(
+                                                        CONTENT_TYPE,
+                                                        HeaderValue::from_str("text/plain")
+                                                            .expect("Unable to create Content-Type header for MATCH_HISTORY_STATUS400"));
+                                                    let body = body;
+                                                    *response.body_mut() = Body::from(body);
                                                 },
                                                 MatchHistoryResponse::Status500
+                                                    (body)
                                                 => {
                                                     *response.status_mut() = StatusCode::from_u16(500).expect("Unable to turn 500 into a StatusCode");
+                                                    response.headers_mut().insert(
+                                                        CONTENT_TYPE,
+                                                        HeaderValue::from_str("text/plain")
+                                                            .expect("Unable to create Content-Type header for MATCH_HISTORY_STATUS500"));
+                                                    let body = body;
+                                                    *response.body_mut() = Body::from(body);
                                                 },
                                             },
                                             Err(_) => {
@@ -296,12 +310,26 @@ impl<T, C> hyper::service::Service<(Request<Body>, C)> for Service<T, C> where
                                                     *response.body_mut() = Body::from(body);
                                                 },
                                                 RiotApiResponse::Status400
+                                                    (body)
                                                 => {
                                                     *response.status_mut() = StatusCode::from_u16(400).expect("Unable to turn 400 into a StatusCode");
+                                                    response.headers_mut().insert(
+                                                        CONTENT_TYPE,
+                                                        HeaderValue::from_str("text/plain")
+                                                            .expect("Unable to create Content-Type header for RIOT_API_STATUS400"));
+                                                    let body = body;
+                                                    *response.body_mut() = Body::from(body);
                                                 },
                                                 RiotApiResponse::Status500
+                                                    (body)
                                                 => {
                                                     *response.status_mut() = StatusCode::from_u16(500).expect("Unable to turn 500 into a StatusCode");
+                                                    response.headers_mut().insert(
+                                                        CONTENT_TYPE,
+                                                        HeaderValue::from_str("text/plain")
+                                                            .expect("Unable to create Content-Type header for RIOT_API_STATUS500"));
+                                                    let body = body;
+                                                    *response.body_mut() = Body::from(body);
                                                 },
                                             },
                                             Err(_) => {
