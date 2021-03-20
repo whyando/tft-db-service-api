@@ -36,10 +36,16 @@ paths:
                 type: object
         '400':
           description: 400 Bad Request
-          content: {}
+          content:
+            text/plain:
+              schema:
+                type: string
         '500':
           description: 500 Internal Server Error
-          content: {}
+          content:
+            text/plain:
+              schema:
+                type: string
   '/matchHistory':
     get:
       summary: Get match history for a single summoner
@@ -64,7 +70,13 @@ paths:
                 type: object
         '400':
           description: 400 Bad Request
-          content: {}
+          content:
+            text/plain:
+              schema:
+                type: string
         '500':
           description: 500 Internal Server Error
-          content: {}
+          content:
+            text/plain:
+              schema:
+                type: string
