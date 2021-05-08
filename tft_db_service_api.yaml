@@ -31,9 +31,9 @@ paths:
         '200':
           description: 200 OK
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
+                type: string
         '400':
           description: 400 Bad Request
           content:
