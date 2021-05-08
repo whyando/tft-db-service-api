@@ -548,7 +548,7 @@ impl<S, C> Api<C> for Client<S, C> where
                         .map_err(|e| ApiError(format!("Failed to read response: {}", e))).await?;
                 let body = str::from_utf8(&body)
                     .map_err(|e| ApiError(format!("Response was not valid UTF8: {}", e)))?;
-                let body = serde_json::from_str::<serde_json::Value>(body)?;
+                let body = body.to_string();
                 Ok(RiotApiResponse::Status200
                     (body)
                 )

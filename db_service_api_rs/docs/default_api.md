@@ -42,7 +42,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **riotApi**
-> serde_json::Value riotApi(url, optional)
+> String riotApi(url, optional)
 Make riot api request or use cached result
 
 ### Required Parameters
@@ -62,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**serde_json::Value**](object.md)
+[**String**](string.md)
 
 ### Authorization
 
@@ -71,7 +71,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

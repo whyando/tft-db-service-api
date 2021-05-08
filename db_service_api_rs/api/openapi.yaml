@@ -35,9 +35,9 @@ paths:
       responses:
         "200":
           content:
-            application/json:
+            text/plain:
               schema:
-                type: object
+                type: string
           description: 200 OK
         "400":
           content:

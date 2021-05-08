@@ -32,7 +32,7 @@ pub enum MatchHistoryResponse {
 pub enum RiotApiResponse {
     /// 200 OK
     Status200
-    (serde_json::Value)
+    (String)
     ,
     /// 400 Bad Request
     Status400
